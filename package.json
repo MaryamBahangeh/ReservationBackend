@@ -5,15 +5,17 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "node src/main.js"
+    "start": "nodemon src/main.js"
   },
   "keywords": [],
   "author": "BijanProgrammer",
   "license": "ISC",
   "devDependencies": {
+    "nodemon": "^3.1.7",
     "prettier": "^3.3.3"
   },
   "dependencies": {
+    "body-parser": "^1.20.3",
     "express": "^4.21.1"
   }
 }
