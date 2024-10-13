@@ -1,6 +1,9 @@
 import express from "express";
 import bodyParser from "body-parser";
 import fs from "fs/promises";
+import { Database } from "./database/index.js";
+
+Database.init();
 
 const app = express();
 app.use(bodyParser.json());
@@ -12,13 +15,13 @@ app.get("/", (req, res) => {
 });
 
 app.get("/clinics", async (req, res) => {
-  const content = await fs.readFile("src/data/clinics.json", {
-    encoding: "utf-8",
+  Database.connection.query("SELECT * FROM clinic", (err, rows) => {
+    if (err) {
+      console.error(err);
+    }
+
+    res.json(rows);
   });
-
-  const clinics = JSON.parse(content);
-
-  res.json(clinics);
 });
 
 app.post("/clinics/create", async (req, res) => {
