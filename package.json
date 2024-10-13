@@ -1,0 +1,19 @@
+{
+  "name": "reservationbackend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/main.js"
+  },
+  "keywords": [],
+  "author": "BijanProgrammer",
+  "license": "ISC",
+  "devDependencies": {
+    "prettier": "^3.3.3"
+  },
+  "dependencies": {
+    "express": "^4.21.1"
+  }
+}
