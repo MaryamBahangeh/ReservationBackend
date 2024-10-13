@@ -1,0 +1,68 @@
+[
+  {
+    "id": "1",
+    "name": "ایدی وان",
+    "star": "4.5",
+    "clinicSpecialName": "کلینیک زیبایی",
+    "happyPatient": 2374,
+    "allPatients": 2500,
+    "address": "نشانی: تهران - میدان فرهنگ- خیابا...",
+    "fields": ["لیفت ابرو", "بوتاکس"],
+    "image": "images/clinics/clinic-pic1.png"
+  },
+  {
+    "id": "2",
+    "name": "مهرافرین",
+    "star": "4.9",
+    "clinicSpecialName": "کلینیک  لیزر",
+    "happyPatient": 374,
+    "allPatients": 600,
+    "address": "نشانی: تهران - میدان کتابی- خیابا...",
+    "fields": ["لیزر ابرو", "لیزر مو", "لیزر پوست"],
+    "image": "images/clinics/clinic-pic2.png"
+  },
+  {
+    "id": "3",
+    "name": "میزراپور",
+    "star": "3.5",
+    "clinicSpecialName": "کلینیک پوست",
+    "happyPatient": 1374,
+    "allPatients": 2500,
+    "address": "نشانی: تهران - میدان آزادی- خیابا...",
+    "fields": ["ابرو", "کاشت مو", "پوست"],
+    "image": "images/clinics/clinic-pic3.png"
+  },
+  {
+    "id": "4",
+    "name": "کودک من",
+    "star": "4.7",
+    "clinicSpecialName": "روانشناس",
+    "happyPatient": 274,
+    "allPatients": 1000,
+    "address": "نشانی: تهران - میدان صادقیه- خیابا...",
+    "fields": ["نوجوان", "نوزاذ", "کودک"],
+    "image": "images/clinics/clinic-pic4.png"
+  },
+  {
+    "id": "1",
+    "name": "ایدی وان",
+    "star": "4.5",
+    "clinicSpecialName": "کلینیک زیبایی",
+    "happyPatient": 2374,
+    "allPatients": 2500,
+    "address": "نشانی: تهران - میدان فرهنگ- خیابا...",
+    "fields": ["لیفت ابرو", "بوتاکس"],
+    "image": "images/clinics/clinic-pic1.png"
+  },
+  {
+    "id": "2",
+    "name": "مهرافرین",
+    "star": "4.9",
+    "clinicSpecialName": "کلینیک  لیزر",
+    "happyPatient": 374,
+    "allPatients": 6500,
+    "address": "نشانی: تهران - میدان کتابی- خیابا...",
+    "fields": ["لیزر ابرو", "لیزر مو", "لیزر پوست"],
+    "image": "images/clinics/clinic-pic2.png"
+  }
+]
