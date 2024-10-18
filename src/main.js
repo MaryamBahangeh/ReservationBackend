@@ -142,7 +142,7 @@ app.post('/feedback/create' , async (req, res) => {
     const date = req.body.date;
     const image = req.body.image;
     const suggestion = req.body.suggestion;
-     const description = req.body.description;
+    const description = req.body.description;
 
     Database.connection.query("insert into " +
         "feedback(name,star,date,image,suggestion,description) " +
@@ -165,7 +165,7 @@ app.put('/feedback/:id', async (req, res) => {
 
     Database.connection.query("update feedback " +
         "set name=?,star=? ,date=? ,image=? ,suggestion=? ,description=? " +
-    "where id= ?"
+        "where id= ?"
         ,[name,star,date,image,suggestion,description,id]
 
         , (err, rows) => {
