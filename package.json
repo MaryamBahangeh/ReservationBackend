@@ -1,5 +1,5 @@
 {
-  "name": "reservationbackend",
+  "name": "practice",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,15 +8,15 @@
     "start": "nodemon src/main.js"
   },
   "keywords": [],
-  "author": "BijanProgrammer",
+  "author": "",
   "license": "ISC",
-  "devDependencies": {
-    "nodemon": "^3.1.7",
-    "prettier": "^3.3.3"
-  },
   "dependencies": {
     "body-parser": "^1.20.3",
     "express": "^4.21.1",
-    "mysql": "^2.18.1"
+    "mysql": "^2.18.1",
+    "prettier": "^3.3.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
   }
 }

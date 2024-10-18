@@ -88,33 +88,17 @@
     "image": "images/clinics/clinic-pic2.png"
   },
   {
-    "id": "7",
-    "name": "7 مهرافرین",
-    "star": "4.9",
-    "clinicSpecialName": "کلینیک  لیزر",
-    "happyPatient": 374,
-    "allPatients": 600,
-    "address": "نشانی: تهران - میدان کتابی- خیابا...",
+    "id": "1",
+    "name": "ایدی وان",
+    "star": "4.5",
+    "clinicSpecialName": "کلینیک زیبایی",
+    "happyPatient": 2374,
+    "allPatients": 2500,
+    "address": "نشانی: تهران - میدان فرهنگ- خیابا...",
     "fields": [
-      "لیزر ابرو",
-      "لیزر مو",
-      "لیزر پوست"
+      "لیفت ابرو",
+      "بوتاکس"
     ],
-    "image": "images/clinics/clinic-pic2.png"
-  },
-  {
-    "id": "8",
-    "name": "8 مهرافرین",
-    "star": "4.9",
-    "clinicSpecialName": "کلینیک  لیزر",
-    "happyPatient": 374,
-    "allPatients": 600,
-    "address": "نشانی: تهران - میدان کتابی- خیابا...",
-    "fields": [
-      "لیزر ابرو",
-      "لیزر مو",
-      "لیزر پوست"
-    ],
-    "image": "images/clinics/clinic-pic2.png"
+    "image": "images/clinics/clinic-pic1.png"
   }
 ]
