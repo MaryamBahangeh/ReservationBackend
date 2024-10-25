@@ -1,23 +1,19 @@
 import mysql from "mysql";
 
 export class Database {
-   static connection;
-   static init(){
-        this.connection = mysql.createConnection({
-            host: 'localhost',
-            user: 'root',
-            password: 'root',
-            database: 'reservation'
-        })
+  static connection;
+  static init() {
+    this.connection = mysql.createConnection({
+      host: process.env.DATABASE_HOST,
+      user: process.env.DATABASE_USERNAME,
+      password: process.env.DATABASE_PASSWORD,
+      database: process.env.DATABASE_NAME,
+    });
 
-        this.connection.connect();
-    }
+    this.connection.connect();
+  }
 
-   static destroy()  {
-        this.connection.end()
-    }
-
+  static destroy() {
+    this.connection.end();
+  }
 }
-
-
-
