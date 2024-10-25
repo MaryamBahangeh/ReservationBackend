@@ -3,6 +3,7 @@ import fs from "fs/promises";
 import bodyParser from "body-parser";
 import { Database } from "./database/index.js";
 import cors from "cors";
+import { create } from "./database/orm.js";
 
 Database.init();
 
@@ -249,21 +250,12 @@ app.get("/consultants", async (req, res) => {
 });
 
 app.post("/consultants/create", async (req, res) => {
-  const name = req.body.name;
-  const star = req.body.star;
-  const specialtyId = req.body.specialtyId;
-  const image = req.body.image;
-
-  Database.connection.query(
-    "insert into " +
-      "consultant(name,star,specialtyId,image) " +
-      "values(?,?,?,?)",
-    [name, star, specialtyId, image],
-    (err, rows) => {
-      if (err) throw err;
-      res.send("done");
-    },
-  );
+  await create(req, res, "consultant", [
+    "name",
+    "star",
+    "specialtyId",
+    "image",
+  ]);
 });
 
 app.put("/consultants/:id", async (req, res) => {
