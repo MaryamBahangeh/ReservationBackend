@@ -14,11 +14,14 @@ const port = 5000;
 
 app.get("/doctor-services", async (req, res) => {
   Database.connection.query(
-    `SELECT d.* , s.name serviceName , s.id serviceId , sp.name specialtyName 
-    From doctor d
-    join specialty sp on sp.id= d.specialtyId
-    join doctor_service ds on d.id = ds.doctorId 
-    join service s on s.id= ds.serviceId order by d.Id `,
+    `SELECT d.*,
+      JSON_ARRAYAGG(JSON_OBJECT("id", s.id, "name", s.name)) AS services,
+      sp.name specialtyName
+      From doctor d
+      join specialty sp on sp.id= d.specialtyId
+      join doctor_service ds on d.id = ds.doctorId 
+      join service s on s.id= ds.serviceId
+      GROUP BY d.id`,
     (err, rows) => {
       if (err) throw err;
       res.json(rows);
