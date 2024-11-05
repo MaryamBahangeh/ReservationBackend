@@ -3,6 +3,7 @@ import fs from "fs/promises";
 import bodyParser from "body-parser";
 import { Database } from "./database/index.js";
 import cors from "cors";
+import { create, deleteRow, update } from "./database/orm.js";
 
 Database.init();
 
@@ -11,13 +12,16 @@ app.use(bodyParser.json());
 app.use(cors());
 const port = 5000;
 
-app.get("/doctor-services", async (req, res) => {
+app.get("/doctors", async (req, res) => {
   Database.connection.query(
-    `SELECT d.* , s.name serviceName , s.id serviceId , sp.name specialtyName 
-    From doctor d
-    join specialty sp on sp.id= d.specialtyId
-    join doctor_service ds on d.id = ds.doctorId 
-    join service s on s.id= ds.serviceId order by d.Id `,
+    `SELECT d.*,
+      JSON_ARRAYAGG(JSON_OBJECT("id", s.id, "name", s.name)) AS services,   
+      sp.name specialtyName
+      From doctor d
+      join specialty sp on sp.id= d.specialtyId
+      join doctor_service ds on d.id = ds.doctorId 
+      join service s on s.id= ds.serviceId
+      GROUP BY d.id`,
     (err, rows) => {
       if (err) throw err;
       res.json(rows);
@@ -56,80 +60,36 @@ app.get("/clinics", async (req, res) => {
 });
 
 app.post("/clinics/create", async (req, res) => {
-  const name = req.body.name;
-  const star = req.body.star;
-  const specialtyId = req.body.specialtyId;
-  const happyPatients = req.body.happyPatients;
-  const allPatients = req.body.allPatients;
-  const address = req.body.address;
-  const image = req.body.image;
-
-  Database.connection.query(
-    "insert into " +
-      "clinic(name,star,specialtyId,happyPatients,allPatients,address,image) " +
-      "values(?,?,?,?,?,?,?)",
-    [name, star, specialtyId, happyPatients, allPatients, address, image],
-    (err, rows) => {
-      if (err) throw err;
-      res.send("done");
-    },
-  );
+  await create(req, res, "clinic", [
+    "name",
+    "star",
+    "specialtyId",
+    "happyPatients",
+    "allPatients",
+    "address",
+    "image",
+  ]);
 });
 
 app.put("/clinics/:id", async (req, res) => {
-  const name = req.body.name;
-  const star = req.body.star;
-  const specialtyId = req.body.specialtyId;
-  const happyPatients = req.body.happyPatients;
-  const allPatients = req.body.allPatients;
-  const address = req.body.address;
-  const image = req.body.image;
-  const id = req.params.id;
-
-  Database.connection.query(
-    "UPDATE clinic set " +
-      "name=? ,star=?, specialtyId=?, happyPatients=?,allPatients=?,address=?,image=?" +
-      " where id= ?",
-    [name, star, specialtyId, happyPatients, allPatients, address, image, id],
-    (err, rows) => {
-      if (err) throw err;
-      res.send("done");
-    },
-  );
+  await update(req, res, "clinic", [
+    "name",
+    "star",
+    "specialtyId",
+    "happyPatients",
+    "allPatients",
+    "address",
+    "image",
+  ]);
 });
+
 app.delete("/clinics/:id", async (req, res) => {
-  const id = req.params.id;
-  Database.connection.query(
-    "DELETE FROM clinic where id=? ",
-    [id],
-    (err, rows) => {
-      if (err) throw err;
-      res.send("done");
-    },
-  );
-});
-
-//doctor
-
-app.get("/doctors", async (req, res) => {
-  Database.connection.query(
-    "SELECT d.* , s.name specialtyName From doctor d join specialty s on d.specialtyId = s.id order by d.id",
-    (err, rows) => {
-      if (err) throw err;
-      res.json(rows);
-    },
-  );
+  await deleteRow(req, res, "clinic");
 });
 
 app.post("/doctors/create", async (req, res) => {
-  const name = req.body.name;
-  const star = req.body.star;
-  const specialtyId = req.body.specialtyId;
-  const happyPatients = req.body.happyPatients;
-  const allPatients = req.body.allPatients;
-  const address = req.body.address;
-  const image = req.body.image;
-
+  const [name, star, specialtyId, happyPatients, allPatients, address, image] =
+    req.body;
   Database.connection.query(
     "insert into " +
       "doctor(name,star,specialtyId,happyPatients,allPatients,address,image) " +
@@ -143,13 +103,8 @@ app.post("/doctors/create", async (req, res) => {
 });
 
 app.put("/doctors/:id", async (req, res) => {
-  const name = req.body.name;
-  const star = req.body.star;
-  const specialtyId = req.body.specialtyId;
-  const happyPatients = req.body.happyPatients;
-  const allPatients = req.body.allPatients;
-  const address = req.body.address;
-  const image = req.body.image;
+  const [name, star, specialtyId, happyPatients, allPatients, address, image] =
+    req.body;
   const id = req.params.id;
 
   Database.connection.query(
@@ -163,6 +118,7 @@ app.put("/doctors/:id", async (req, res) => {
     },
   );
 });
+
 app.delete("/doctors/:id", async (req, res) => {
   const id = req.params.id;
   Database.connection.query(
@@ -175,7 +131,6 @@ app.delete("/doctors/:id", async (req, res) => {
   );
 });
 
-//feedback
 app.get("/feedback", async (req, res) => {
   Database.connection.query("SELECT * From feedback", (err, rows) => {
     if (err) throw err;
@@ -184,12 +139,7 @@ app.get("/feedback", async (req, res) => {
 });
 
 app.post("/feedback/create", async (req, res) => {
-  const name = req.body.name;
-  const star = req.body.star;
-  const date = req.body.date;
-  const image = req.body.image;
-  const suggestion = req.body.suggestion;
-  const description = req.body.description;
+  const [name, star, date, image, suggestion, description] = req.body;
 
   Database.connection.query(
     "insert into " +
@@ -204,13 +154,8 @@ app.post("/feedback/create", async (req, res) => {
 });
 
 app.put("/feedback/:id", async (req, res) => {
-  const name = req.body.name;
-  const star = req.body.star;
-  const date = req.body.date;
-  const image = req.body.image;
-  const suggestion = req.body.suggestion;
+  const [name, star, date, image, suggestion, description] = req.body;
   const id = req.params.id;
-  const description = req.body.description;
 
   Database.connection.query(
     "update feedback " +
@@ -249,10 +194,7 @@ app.get("/consultants", async (req, res) => {
 });
 
 app.post("/consultants/create", async (req, res) => {
-  const name = req.body.name;
-  const star = req.body.star;
-  const specialtyId = req.body.specialtyId;
-  const image = req.body.image;
+  const [name, star, specialtyId, image] = req.body;
 
   Database.connection.query(
     "insert into " +
@@ -267,10 +209,7 @@ app.post("/consultants/create", async (req, res) => {
 });
 
 app.put("/consultants/:id", async (req, res) => {
-  const name = req.body.name;
-  const star = req.body.star;
-  const specialtyId = req.body.specialtyId;
-  const image = req.body.image;
+  const [name, star, specialtyId, image] = req.body;
   const id = req.params.id;
 
   Database.connection.query(
@@ -284,6 +223,7 @@ app.put("/consultants/:id", async (req, res) => {
     },
   );
 });
+
 app.delete("/consultants/:id", async (req, res) => {
   const id = req.params.id;
   Database.connection.query(
